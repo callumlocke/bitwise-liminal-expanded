@@ -4,8 +4,6 @@
     const canvas = window.c;
     const canvasWidth = canvas.width;
 
-    const ctx = canvas.getContext("2d");
-
     const rectsPerFrame = 9986;
     const frameLength = 9;
 
@@ -64,7 +62,7 @@
             const rectHeight = 5 / Z;
 
             // Draw rectangle
-            ctx.fillRect(rectX, rectY, rectWidth, rectHeight);
+            canvas.getContext("2d").fillRect(rectX, rectY, rectWidth, rectHeight);
         }
     }
 
