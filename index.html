@@ -1,0 +1,97 @@
+<canvas id="c" style="height: 50%" width="128" height="80"></canvas>
+
+<script>
+    const canvas = window.c;
+    const canvasWidth = canvas.width;
+
+    const ctx = canvas.getContext("2d");
+
+    const rectsPerFrame = 9986;
+    const frameLength = 9;
+
+    let t = frameLength;
+
+    function render() {
+        let R;
+        let T;
+        let Z;
+        let scene;
+        let rectX;
+        let rectY;
+
+        t += 0.1;
+
+        // Clear canvas
+        canvas.width = canvasWidth;
+
+        // Decide current scene (1, 2, 3, or 0)
+        scene = (t / frameLength) & 3;
+
+        // Draw 9986 rectangles...
+        let rectIndex = rectsPerFrame;
+        while (rectIndex--) {
+            // Decide rectangle position (and maybe break)
+            rectX = (rectIndex % canvasWidth) + 4 / R;
+            rectY = (rectIndex + 1) / canvasWidth;
+
+            // Do some maths (???) to decide Z
+            Z = 5;
+            while (
+                0 <
+                (((scene * 95 + Math.cos(t / 3) + (Z * rectX) / 64 - Z) ^ Z) |
+                    (((60 - rectY) * Z) / 58)) %
+                    13
+            ) {
+                // NB. this block runs varying numbers of iterations: ~60-73 times during scene 1, ~34-42 times during scene 2, etc
+                Z += 0.2;
+            }
+
+            // Decide rectangle width, based on some more maths (???)
+            let rectWidth;
+            if (
+                ((Math.cos(t / 6) * T) ^
+                    (((scene * rectIndex) / 1e4) * T + t)) %
+                20
+            ) {
+                R = T++;
+                rectWidth = 1;
+            } else {
+                T = 9;
+                rectWidth = 19 / R;
+            }
+
+            // Decide rectangle height
+            const rectHeight = 5 / Z;
+
+            // Draw rectangle
+            ctx.fillRect(rectX, rectY, rectWidth, rectHeight);
+        }
+    }
+
+    const interval = setInterval(render, frameLength);
+</script>
+<pre>
+
+Ｂｉｔｗｉｓｅ 📼 Ｌｉｍｉｎａｌ
+A Short Film in 256 Bytes of Code
+
+Programmed by KilledByAPixel
+Presented at Lovebyte Party 2024
+
+...
+
+I found an old VHS tape at a yard sale.
+It was labeled "Bitwise Liminal" in sharpie.
+But when I watched the video it was only static.
+
+Then I started having vivid and... unsettling dreams.
+Also I couldn't stop thinking about that weird VHS tape.
+After researching I learned it was a digital backup.
+Using some special software I recovered the data.
+To my shock, it was a 256 byte program...
+
+With trembling hands I opened it in a web browser.
+Strange. This reminds me of the dreams I've been having.
+Now I don't need to sleep anymore.
+I just keep watching.
+</pre>
